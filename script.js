@@ -14,11 +14,11 @@ var countrySet = ['KEN'];
 var map, popup, datasource, iconLayer, centerMarker, searchURL;
 var listItemTemplate = '<div class="listItem" onclick="itemSelected(\'{id}\')"><div class="listItem-title">{title}</div>{city}<br />Open until {closes}<br />{distance} miles away</div>';
 
-function initialize() {
+function CreateMap(lat,long) {
     //Initialize a map instance.
     map = new atlas.Map('myMap', {
-        center: [-90,40],
-        zoom: 2,
+        center: [long,lat],
+        zoom: 14,
         view: 'Auto',
     
     //Add your Azure Maps key to the map SDK. Get an Azure Maps key at https://azure.com/maps. NOTE: The primary key should be used as the key.
@@ -476,5 +476,31 @@ function getAddressLine2(properties) {
 
     return html.join('');
 }
+
+function initialize() {
+    navigator.geolocation.getCurrentPosition(
+      function(p) {
+        // console.log(p.coords.latitude,p.coords.longitude);
+        CreateMap(p.coords.latitude, p.coords.longitude);
+      },
+      function(err) {
+        switch (error.code) {
+              case error.PERMISSION_DENIED:
+                  alert('User denied the request for Geolocation.');
+                  break;
+              case error.POSITION_UNAVAILABLE:
+                  alert('Position information is unavailable.');
+                  break;
+              case error.TIMEOUT:
+                  alert('The request to get user position timed out.');
+                  break;
+              case error.UNKNOWN_ERROR:
+                  alert('An unknown error occurred.');
+                  break;
+          }
+      }
+    );
+  }
+
 //Initialize the application when the page is loaded.
 window.onload = initialize;
