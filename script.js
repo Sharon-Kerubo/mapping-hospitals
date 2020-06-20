@@ -18,7 +18,7 @@ function initialize() {
     //Initialize a map instance.
     map = new atlas.Map('myMap', {
         center: [-90,40],
-        zoom: 11,
+        zoom: 2,
         view: 'Auto',
     
     //Add your Azure Maps key to the map SDK. Get an Azure Maps key at https://azure.com/maps. NOTE: The primary key should be used as the key.
@@ -465,7 +465,7 @@ function getAddressLine2(properties) {
     }
 
     if (properties['Division']) {
-        html.push(' ', properties['PostCode']);
+        html.push(' ', properties['Division']);
     }
      if (properties['Location']) {
         html.push(' ', properties['Location']);
